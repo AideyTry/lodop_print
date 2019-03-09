@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script language="javascript" src="LodopFuncs.js"></script>
+</head>
+
+<body>
+  <div>
+    打印
+    <table>
+      <tr>
+        <td width="100%" height="22">
+          <font face="宋体">·现在测试一下：<a href="javascript:CheckIsInstall()">查看本机是否安装了控件或云打印</a></font>
+        </td>
+      </tr>
+    </table>
+    <p>1：若只打印《表单一》,看一下<a href="javascript:prn1_preview()">打印预览</a>,可<a href="javascript:prn1_print()">直接打印</a>也可
+      <a href="javascript:prn1_printA()">选择打印机</a>打印。
+    </p>
+    <form id="form1">
+      <table>
+        <tr>
+          <th>哈哈</th>
+          <th>嘿嘿</th>
+          <th>呵呵</th>
+        </tr>
+        <tr>
+          <td>111</td>
+          <td>222</td>
+          <td>333</td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</body>
+<script language="javascript" type="text/javascript">
+  let LODOP = null
+  function CheckIsInstall() {
+    try {
+      LODOP = getLodop();
+      if (LODOP.VERSION) {
+        if (LODOP.CVERSION)
+          alert("当前有C-Lodop云打印可用!\n C-Lodop版本:" + LODOP.CVERSION + "(内含Lodop" + LODOP.VERSION + ")");
+        else
+          alert("本机已成功安装了Lodop控件！\n 版本号:" + LODOP.VERSION);
+
+      };
+    } catch (err) {
+    }
+  };
+  function prn1_preview() {
+    CreateOneFormPage();
+    LODOP.PREVIEW();
+  };
+  function prn1_print() {		
+		CreateOneFormPage();
+		LODOP.PRINT();	
+	};
+  function CreateOneFormPage() {
+    LODOP = getLodop();
+    LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_表单一");
+    LODOP.SET_PRINT_STYLE("FontSize", 18);
+    LODOP.SET_PRINT_STYLE("Bold", 1);
+    LODOP.ADD_PRINT_TEXT(50, 231, 260, 39, "大大汽修");
+    LODOP.ADD_PRINT_HTM(88, 200, 350, 600, document.getElementById("form1").innerHTML);
+  };	   
+</script>
+
+</html>
